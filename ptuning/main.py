@@ -110,7 +110,8 @@ def main():
     config.prefix_projection = model_args.prefix_projection
 
     tokenizer = AutoTokenizer.from_pretrained(model_args.model_name_or_path, trust_remote_code=True)
-
+    
+    # Load ptuning model 
     if model_args.ptuning_checkpoint is not None:
         # Evaluation
         # Loading extra state dict of prefix encoder
@@ -176,7 +177,7 @@ def main():
         inputs = [prefix + inp for inp in inputs]
         model_inputs = tokenizer(inputs, max_length=data_args.max_source_length, truncation=True, padding=True)
         labels = tokenizer(text_target=targets, max_length=max_target_length, truncation=True)
-
+        # padding 的 token不参与loss计算
         if data_args.ignore_pad_token_for_loss:
             labels["input_ids"] = [
                 [(l if l != tokenizer.pad_token_id else -100) for l in label] for label in labels["input_ids"]
