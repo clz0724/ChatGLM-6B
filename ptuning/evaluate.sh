@@ -1,6 +1,6 @@
 PRE_SEQ_LEN=128
 CHECKPOINT=adgen-chatglm-6b-pt-128-2e-2
-STEP=3000
+STEP=1000
 
 CUDA_VISIBLE_DEVICES=0 python3 main.py \
     --do_predict \
@@ -9,7 +9,7 @@ CUDA_VISIBLE_DEVICES=0 python3 main.py \
     --overwrite_cache \
     --prompt_column content \
     --response_column summary \
-    --model_name_or_path THUDM/chatglm-6b \
+    --model_name_or_path model_glm \
     --ptuning_checkpoint ./output/$CHECKPOINT/checkpoint-$STEP \
     --output_dir ./output/$CHECKPOINT \
     --overwrite_output_dir \
